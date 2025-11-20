@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mealmingle
+      SPRING_DATASOURCE_USERNAME: mealmingle
+      SPRING_DATASOURCE_PASSWORD: mealmingle
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: mealmingle
+      POSTGRES_USER: mealmingle
+      POSTGRES_PASSWORD: mealmingle
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+volumes:
+  dbdata:
